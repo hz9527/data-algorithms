@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+	<script>
+		//链表
+		//单向列表
+		function Node(ele){
+			this.ele=ele;
+			this.next=null;
+		}
+		function LList(){
+			this.head=new Node('head');
+			this.find=find;
+			this.insert=insert;
+			this.remove=remove;
+			this.display=display;
+		}
+		function find(item){
+			var cur=this.head;
+			while(cur.ele!=item){
+				cur=cur.next;
+			}
+			return cur
+		}
+		function insert(newEle,item){
+			var newNode=new Node(newEle);
+			var cur=this.find(item);
+			newNode.next=cur.next;
+			cur.next=newNode;
+		}
+		function display(){
+			var cur=this.head;
+			while(cur!=null){
+				cur.next&&console.log(cur.next.ele);
+				cur=cur.next;
+			}
+		}
+		function remove(item){//将前一项的引用至后一项
+			var cur=this.find(item);
+			var current=this.head;
+			while(current.next.ele!=item){
+				current=current.next;
+			}
+			current.next=current.next.next;
+		}
+		var abc=new LList();
+		abc.insert('a','head');
+		abc.insert('b','a');
+		abc.insert('d','b');
+		abc.insert('c','b');
+		abc.remove('c')
+		abc.display();
+		
+		
+	</script>
+	</body>
+</html>

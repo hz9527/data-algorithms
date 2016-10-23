@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//创建节点方法
+			function Node(data,left,right){
+				this.data=data;
+				this.left=left;
+				this.right=right;
+				this.show=showData;
+			}
+			function showData(){
+				return this.data
+			}
+			//二叉查找树
+			function Bst(){
+				this.root=null;
+				this.insert=insert;
+				this.display=display;
+				this.find=find;
+				this.remove=remove;
+			}
+			function insert(data){
+				//遍历二叉查找树，将当前节点当做子树的根，若到当前节点是叶子节点，而data小于当前节点的data那么说明data所在节点是左节点，反之是右节点
+				var n=new Node(data,null,null);
+				var current=this.root;
+				var parent;
+				if(current==null){
+					this.root=n;
+				}else{
+					while(true){
+						parent=current;
+						if(data<current.data){
+							current=parent.left;
+							if(current==null){
+								parent.left=n;
+								break;
+							}
+						}else{
+							current=parent.right;
+							if(current==null){
+								parent.right=n;
+								break;
+							}
+						}
+					}
+				}
+			}
+			//打印二叉查找树
+			function display(){
+				console.log(this.root);
+			}
+			//查找一个元素在二叉树位置
+			function find(data){
+				var current=this.root;
+				while(current.data!=data){
+					if(current.data>data){
+						current=current.left;
+						if(current==null){
+							return false
+						}
+					}else{
+						current=current.right;
+						if(current==null){
+							return false
+						}
+					}
+				}
+				return current;
+			}
+			//删除任意一个节点
+//			function remove(data){
+//				var par=this.root;
+//				while(true){
+//					if(data<par.data){
+//						if(data==par.left.data){
+//							break
+//						}
+//						par=par.left;
+//					}else if(data>par.data){
+//						if(data==par.right.data){
+//							break
+//						}
+//						par=par.right;
+//					}else if(data==par.data){
+//						return par
+//					}
+//				}
+//				//如果cur是叶子节点，直接删除
+//				//如果cur只有左子树，cur是par左子树，则将左子树接到par上作为左子树；cur是par右子树，则将左子树接到par上作为右子树
+//				//如果cur只有右子树，cur是par左子树，则将右子树接到par作为左子树；cur是par右子树，则将右子树接到par上，作为右子树
+//				//因此只有一边子树时，只需要根据cur与par关系来确定接到哪边。
+//				//如果cur有左右子树，需要将左子树接到par上且左右关系与原来一致，右子树接到左子树最右叶子节点；
+//				//或将右子树接到par上且左右关系与原来一致，左子树接到右子树最左叶子节点
+//				var cur,direction;
+//				if(par.left!=null&&par.left.data==data){
+//					cur=par.left;
+//					direction='left';
+//				}else if(par.right!=null&&par.right.data==data){
+//					cur=par.right;
+//					direction='right';
+//				}
+//				if(cur.left==null&&cur.right==null){
+//					par[direction]=null;
+//				}else if(cur.left==null&&cur.right!=null){
+//					var curRight=cur.right;
+//					par[direction]=curRight;
+//				}else if(cur.left!=null&&cur.right==null){
+//					var curLeft=cur.left;
+//					par[direction]=curLeft;
+//				}else{
+//					var curRight=cur.right;
+//					var curLeft=cur.left;
+//					par[direction]=curLeft;
+//					var current=curLeft;
+//					while(true){
+//						current=current.right;
+//						if(current.right==null){
+//							break
+//						}
+//					}
+//					console.log(current,curLeft)
+//					current.right=curRight;
+//				}
+//			}
+function remove(data) {
+   root = removeNode(this.root, data);
+}
+
+function removeNode(node, data) {
+   if (node == null) {
+      return null;
+   }
+   if (data == node.data) {
+      // node has no children
+      if (node.left == null && node.right == null) {
+         return null;
+      }
+      // node has no left child
+      if (node.left == null) {
+         return node.right;
+      }
+      // node has no right child
+      if (node.right == null) {
+         return node.left;
+      }
+      // node has two children
+      var tempNode = getSmallest(node.right);
+      node.data = tempNode.data;
+      node.right = removeNode(node.right, tempNode.data);
+      return node;
+   }
+   else if (data < node.data) {
+      node.left = removeNode(node.left, data);
+      return node;
+   }
+   else {
+      node.right = removeNode(node.right, data);
+      return node;
+   }
+}
+function getSmallest(node) {
+   if (node.left == null) {
+      return node;
+   }
+   else {
+      return getSmallest(node.left);
+   }
+}
+			//按照二叉查找树排序
+			function inOrder(cur){
+				if(!(cur==null)){
+					inOrder(cur.left);
+					console.log(cur.data);
+					inOrder(cur.right);
+				}
+			}
+			var bst=new Bst();
+			bst.insert(50);
+			bst.insert(30);
+			bst.insert(70);
+			bst.insert(20);
+			bst.insert(40);
+			bst.insert(60);
+			bst.insert(80);
+			bst.insert(18);
+			bst.insert(22);
+			bst.insert(38);
+			bst.insert(42);
+			bst.insert(58);
+			bst.insert(62);
+			bst.insert(78);
+			bst.insert(82);
+			bst.insert(19);
+			bst.insert(24);
+			bst.insert(36);
+			bst.insert(41);
+			bst.insert(56);
+			bst.insert(61);
+			bst.insert(79);
+			bst.insert(84);
+			inOrder(bst.root)
+			console.log('hhhhhhhhh')
+			bst.remove(30);
+			inOrder(bst.root)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			var strings='';
+			function objToString(obj,str,k){
+			var result,type
+			if(obj.sort){
+				type='arr'
+				result=[];
+			}else if(typeof obj=='object'){
+				type='obj'
+				result={};
+			}else{
+				if(str=='obj'){
+					result='{'+k+obj.toString();
+				}else if(str=='arr'){
+					result='['+k+obj.toString();
+				}else{
+					result=obj.toString();
+				}
+				strings+=result;
+				return result	
+			}
+			for(var k in obj){
+				var copy=obj[k];
+				objToString(copy,type,k);
+			}
+			
+		}
+		var a={
+			a1:{a11:1,a12:[1,2,3]},
+			a2:[
+					1,
+					2,
+					[2,1],
+					{a21:5,a22:[8,9],a23:{a231:true}}
+				],
+			a3:function(){console.log(1)}
+		}
+//		objToString(a)
+//		console.log(strings,a)
+		var b=JSON.stringify(a);
+		console.log(b+'hh',a)
+		var c=b.toString();
+		console.log(b,c.a1,b.a1)
+		</script>
+		
+	</body>
+</html>
